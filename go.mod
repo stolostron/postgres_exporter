@@ -14,7 +14,6 @@ require (
 	github.com/prometheus/exporter-toolkit v0.10.0
 	github.com/smartystreets/goconvey v1.8.1
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
-	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -44,4 +43,5 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
