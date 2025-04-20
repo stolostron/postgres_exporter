@@ -32,7 +32,7 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f // indirect
-	github.com/prometheus/procfs v0.11.1 // indirect
+	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rogpeppe/go-internal v1.10.0 // indirect
 	github.com/smarty/assertions v1.15.0 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
