@@ -478,7 +478,8 @@ spec:
       optional: true
     - name: netrc
       optional: true
-  taskRunTemplate: {}
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-postgres-exporter-globalhub-1-3
   workspaces:
   - name: git-auth
     secret:
