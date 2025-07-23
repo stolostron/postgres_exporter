@@ -47,7 +47,7 @@ spec:
       - name: url
         value: "https://github.com/stolostron/konflux-build-catalog.git"
       - name: revision
-        value: '{{revision}}'
+        value: main
       - name: pathInRepo
         value: pipelines/common.yaml
   taskRunTemplate:
