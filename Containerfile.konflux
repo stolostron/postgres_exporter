@@ -18,7 +18,7 @@ LABEL org.label-schema.schema-version="1.0"
 
 # Bundle metadata
 LABEL name="multicluster-global-hub/postgres_exporter"
-LABEL version="release-1.5"
+LABEL version="release-1.4"
 LABEL summary="multicluster global hub postgres exporter"
 LABEL io.openshift.expose-services=""
 LABEL io.openshift.tags="data,images"
