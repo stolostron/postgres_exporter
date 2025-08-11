@@ -1,0 +1,35 @@
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.23 AS builder
+
+WORKDIR /workspace
+COPY . .
+
+RUN cd promu && CGO_ENABLED=1 GOFLAGS="-p=4" go build -mod=readonly -a -v -o /usr/local/bin .
+ENV BUILD_PROMU=false
+RUN promu build --cgo --prefix ./
+
+# Stage 2: Copy the binaries from the image builder to the base image
+FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
+
+# Red Hat annotations.
+LABEL com.redhat.component="multicluster global hub postgres exporter"
+LABEL org.label-schema.vendor="Red Hat"
+LABEL org.label-schema.license="Red Hat Advanced Cluster Management for Kubernetes EULA"
+LABEL org.label-schema.schema-version="1.0"
+
+# Bundle metadata
+LABEL name="multicluster-global-hub/postgres_exporter"
+LABEL version="release-1.4"
+LABEL summary="multicluster global hub postgres exporter"
+LABEL io.openshift.expose-services=""
+LABEL io.openshift.tags="data,images"
+LABEL io.k8s.display-name="multicluster global hub postgres exporter"
+LABEL io.k8s.description="This is the standard release image for the multicluster global hub postgres exporter"
+LABEL maintainer="['acm-component-maintainers@redhat.com']"
+LABEL description="multicluster global hub postgres exporter"
+
+
+COPY --from=builder /workspace/postgres_exporter /bin/postgres_exporter
+
+EXPOSE     9187
+USER       nobody
+ENTRYPOINT [ "/bin/postgres_exporter" ]
