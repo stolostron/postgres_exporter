@@ -11,14 +11,15 @@ RUN promu build --cgo --prefix ./
 FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
 
 # Red Hat annotations.
-LABEL com.redhat.component="multicluster global hub postgres exporter"
+LABEL com.redhat.component="multicluster-globalhub-postgres-exporter-rhel9-container"
+LABEL cpe="cpe:/a:redhat:multicluster_globalhub:1.7::el9"
 LABEL org.label-schema.vendor="Red Hat"
 LABEL org.label-schema.license="Red Hat Advanced Cluster Management for Kubernetes EULA"
 LABEL org.label-schema.schema-version="1.0"
 
 # Bundle metadata
-LABEL name="multicluster-global-hub/postgres_exporter"
-LABEL version="release-1.5"
+LABEL name="multicluster-globalhub/multicluster-globalhub-postgres-exporter-rhel9"
+LABEL version="release-1.7"
 LABEL summary="multicluster global hub postgres exporter"
 LABEL io.openshift.expose-services=""
 LABEL io.openshift.tags="data,images"
