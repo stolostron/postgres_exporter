@@ -8,7 +8,7 @@ ENV BUILD_PROMU=false
 RUN promu build --cgo --prefix ./
 
 # Stage 2: Copy the binaries from the image builder to the base image
-FROM registry.access.redhat.com/ubi9/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.8-1779809423
 
 # Red Hat annotations.
 LABEL com.redhat.component="multicluster global hub postgres exporter"
