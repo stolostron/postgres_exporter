@@ -18,9 +18,9 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/go-kit/log"
 	"github.com/prometheus/client_golang/prometheus"
 	dto "github.com/prometheus/client_model/go"
+	"github.com/prometheus/common/promslog"
 	"github.com/smartystreets/goconvey/convey"
 )
 
@@ -88,7 +88,7 @@ func TestPGStatDatabaseCollector(t *testing.T) {
 	go func() {
 		defer close(ch)
 		c := PGStatDatabaseCollector{
-			log: log.With(log.NewNopLogger(), "collector", "pg_stat_database"),
+			log: promslog.NewNopLogger().With("collector", "pg_stat_database"),
 		}
 
 		if err := c.Update(context.Background(), inst, ch); err != nil {
@@ -209,7 +209,7 @@ func TestPGStatDatabaseCollectorNullValues(t *testing.T) {
 	go func() {
 		defer close(ch)
 		c := PGStatDatabaseCollector{
-			log: log.With(log.NewNopLogger(), "collector", "pg_stat_database"),
+			log: promslog.NewNopLogger().With("collector", "pg_stat_database"),
 		}
 
 		if err := c.Update(context.Background(), inst, ch); err != nil {
@@ -351,7 +351,7 @@ func TestPGStatDatabaseCollectorRowLeakTest(t *testing.T) {
 	go func() {
 		defer close(ch)
 		c := PGStatDatabaseCollector{
-			log: log.With(log.NewNopLogger(), "collector", "pg_stat_database"),
+			log: promslog.NewNopLogger().With("collector", "pg_stat_database"),
 		}
 
 		if err := c.Update(context.Background(), inst, ch); err != nil {
@@ -466,7 +466,7 @@ func TestPGStatDatabaseCollectorTestNilStatReset(t *testing.T) {
 	go func() {
 		defer close(ch)
 		c := PGStatDatabaseCollector{
-			log: log.With(log.NewNopLogger(), "collector", "pg_stat_database"),
+			log: promslog.NewNopLogger().With("collector", "pg_stat_database"),
 		}
 
 		if err := c.Update(context.Background(), inst, ch); err != nil {
