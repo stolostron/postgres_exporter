@@ -2,7 +2,7 @@
 
 **postgres_exporter** is a Red Hat–maintained fork of the [Prometheus Community PostgreSQL Server Exporter](https://github.com/prometheus-community/postgres_exporter), packaged for Multicluster Global Hub. The Global Hub **operator** deploys this image on the global hub cluster alongside PostgreSQL to expose database metrics in Prometheus format.
 
-Related: [multicluster-global-hub docs/ARCHITECTURE.md](https://github.com/stolostron/multicluster-global-hub/blob/release-5.0/docs/ARCHITECTURE.md) for the full operator/manager/agent data flow.
+Related: [multicluster-global-hub docs/ARCHITECTURE.md](https://github.com/stolostron/multicluster-global-hub/blob/release-5.1/docs/ARCHITECTURE.md) for the full operator/manager/agent data flow.
 
 ---
 
@@ -28,7 +28,7 @@ This fork has **no source-code patches** on top of upstream. All customizations 
 - **CGO enabled**: `promu build --cgo` produces a CGO binary required for Konflux FIPS binary scanning (`fbc-fips-check-oci-ta`).
 - **promu vendored**: The `promu/` directory vendors the Prometheus build utility source so Konflux hermetic builds do not need external network access during compilation.
 - **UBI-minimal runtime**: Production image uses `registry.access.redhat.com/ubi9/ubi-minimal` for Red Hat supply-chain compliance.
-- **Red Hat labels**: Component `multicluster-globalhub-postgres-exporter-rhel9-container`, CPE `cpe:/a:redhat:multicluster_globalhub:5.0::el9`.
+- **Red Hat labels**: Component `multicluster-globalhub-postgres-exporter-rhel9-container`, CPE `cpe:/a:redhat:multicluster_globalhub:5.1::el9`.
 
 ---
 
@@ -55,12 +55,12 @@ podman build -f Containerfile.konflux -t postgres-exporter:local .
 
 | Pipeline | Trigger | File |
 | -------- | ------- | ---- |
-| Push | `release-5.0` branch push | `.tekton/postgres-exporter-globalhub-5-0-push.yaml` |
-| Pull request | PRs to `release-5.0` | `.tekton/postgres-exporter-globalhub-5-0-pull-request.yaml` |
+| Push | `release-5.1` branch push | `.tekton/postgres-exporter-globalhub-5-1-push.yaml` |
+| Pull request | PRs to `release-5.1` | `.tekton/postgres-exporter-globalhub-5-1-pull-request.yaml` |
 
-- **Application:** `release-globalhub-5-0`
-- **Component:** `postgres-exporter-globalhub-5-0`
-- **Output:** `quay.io/redhat-user-workloads/acm-multicluster-glo-tenant/postgres-exporter-globalhub-5-0:<sha>`
+- **Application:** `release-globalhub-5-1`
+- **Component:** `postgres-exporter-globalhub-5-1`
+- **Output:** `quay.io/redhat-user-workloads/acm-multicluster-glo-tenant/postgres-exporter-globalhub-5-1:<sha>`
 - **Platforms:** linux/x86_64, ppc64le, s390x, arm64
 - **Pipeline:** `konflux-build-catalog/pipelines/common-base.yaml` (hermetic, prefetch gomod for `promu/`)
 
@@ -90,7 +90,7 @@ Key collectors active by default:
 
 | Branch | Purpose |
 | ------ | ------- |
-| `release-5.0` | Current Global Hub 5.0 development and Konflux builds |
+| `release-5.1` | Current Global Hub 5.1 development and Konflux builds |
 | `release-2.x` | Prior GH release tracks (maintenance; `release-2.17` = GH 1.8, `release-2.16` = GH 1.7, etc.) |
 
 The branch naming follows the ACM release numbering (`release-2.17` = ACM 2.17 = GH 1.8), not the upstream postgres_exporter version.
