@@ -143,7 +143,8 @@ func main() {
 		prometheus.MustRegister(pe)
 	}
 
-	http.Handle(*metricsPath, promhttp.Handler())
+	mux := http.NewServeMux()
+	mux.Handle(*metricsPath, promhttp.Handler())
 
 	if *metricsPath != "/" && *metricsPath != "" {
 		landingConfig := web.LandingConfig{
@@ -162,12 +163,12 @@ func main() {
 			logger.Error("error", "err", err)
 			os.Exit(1)
 		}
-		http.Handle("/", landingPage)
+		mux.Handle("/", landingPage)
 	}
 
-	http.HandleFunc("/probe", handleProbe(logger, excludedDatabases))
+	mux.HandleFunc("/probe", handleProbe(logger, excludedDatabases))
 
-	srv := &http.Server{}
+	srv := &http.Server{Handler: mux}
 	if err := web.ListenAndServe(srv, webConfig, logger); err != nil {
 		logger.Error("Error running HTTP server", "err", err)
 		os.Exit(1)
