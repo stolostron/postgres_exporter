@@ -41,7 +41,7 @@ podman build -f Containerfile.konflux -t postgres-exporter:local .
 Containerfile.konflux         Production multi-stage container build (Konflux / brew)
 Makefile                      Thin wrapper — sets DOCKER_ARCHS/REPO, includes Makefile.common
 Makefile.common               Prometheus-community shared build rules (promu, lint, test, style)
-.tekton/                      Konflux PipelineRuns (push + pull-request for release-5.0)
+.tekton/                      Konflux PipelineRuns (push + pull-request for release-5.1)
 cmd/postgres_exporter/        Exporter main package
 collector/                    Metric collectors for PostgreSQL subsystems
 config/                       Config file parser and examples (auth_modules)
