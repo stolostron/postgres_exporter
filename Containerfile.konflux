@@ -1,0 +1,41 @@
+ARG RUNTIME_IMAGE=registry.redhat.io/ubi9/ubi-minimal-pqc:latest
+
+# rebuild: force new image digest for conforma stage release (2026-09-08)
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_1.26 AS builder
+
+WORKDIR /workspace
+COPY . .
+
+RUN cd promu && CGO_ENABLED=1 GOFLAGS="-p=4" go build -mod=readonly -a -v -o /usr/local/bin .
+ENV BUILD_PROMU=false
+RUN promu build --cgo --prefix ./
+
+# Stage 2: Copy the binaries from the image builder to the base image
+FROM ${RUNTIME_IMAGE}
+
+# Red Hat annotations.
+LABEL com.redhat.component="multicluster-globalhub-postgres-exporter-rhel9-container"
+ARG RELEASE_CPE="cpe:/a:redhat:multicluster_globalhub:5.0::el9"
+ARG RELEASE_VERSION="release-5.0"
+LABEL cpe="${RELEASE_CPE}"
+LABEL org.label-schema.vendor="Red Hat"
+LABEL org.label-schema.license="Red Hat Advanced Cluster Management for Kubernetes EULA"
+LABEL org.label-schema.schema-version="1.0"
+
+# Bundle metadata
+LABEL name="multicluster-globalhub/multicluster-globalhub-postgres-exporter-rhel9"
+LABEL version="${RELEASE_VERSION}"
+LABEL summary="multicluster global hub postgres exporter"
+LABEL io.openshift.expose-services=""
+LABEL io.openshift.tags="data,images"
+LABEL io.k8s.display-name="multicluster global hub postgres exporter"
+LABEL io.k8s.description="This is the standard release image for the multicluster global hub postgres exporter"
+LABEL maintainer="['acm-component-maintainers@redhat.com']"
+LABEL description="multicluster global hub postgres exporter"
+
+
+COPY --from=builder /workspace/postgres_exporter /bin/postgres_exporter
+
+EXPOSE     9187
+USER       nobody
+ENTRYPOINT [ "/bin/postgres_exporter" ]
