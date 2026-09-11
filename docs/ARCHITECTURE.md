@@ -55,12 +55,12 @@ podman build -f Containerfile.konflux -t postgres-exporter:local .
 
 | Pipeline | Trigger | File |
 | -------- | ------- | ---- |
-| Push | `release-5.1` branch push | `.tekton/postgres-exporter-globalhub-5-1-push.yaml` |
-| Pull request | PRs to `release-5.1` | `.tekton/postgres-exporter-globalhub-5-1-pull-request.yaml` |
+| Push | Matching `release-5.x` branch push | `.tekton/postgres-exporter-globalhub-5-<release>-push.yaml` |
+| Pull request | PRs to `main` or the matching `release-5.x` branch | `.tekton/postgres-exporter-globalhub-5-<release>-pull-request.yaml` |
 
-- **Application:** `release-globalhub-5-1`
-- **Component:** `postgres-exporter-globalhub-5-1`
-- **Output:** `quay.io/redhat-user-workloads/acm-multicluster-glo-tenant/postgres-exporter-globalhub-5-1:<sha>`
+- **Applications:** `release-globalhub-5-0`, `release-globalhub-5-1`, and `release-globalhub-5-2`
+- **Components:** `postgres-exporter-globalhub-5-<release>`
+- **Output:** `quay.io/redhat-user-workloads/acm-multicluster-glo-tenant/postgres-exporter-globalhub-5-<release>:<sha>`
 - **Platforms:** linux/x86_64, ppc64le, s390x, arm64
 - **Pipeline:** `konflux-build-catalog/pipelines/common-base.yaml` (hermetic, prefetch gomod for `promu/`)
 
@@ -90,7 +90,8 @@ Key collectors active by default:
 
 | Branch | Purpose |
 | ------ | ------- |
-| `release-5.1` | Current Global Hub 5.1 development and Konflux builds |
+| `main` | Shared source branch for active Global Hub releases |
+| `release-5.0`, `release-5.1`, `release-5.2` | Release branches advanced from `main` by fast-forward |
 | `release-2.x` | Prior GH release tracks (maintenance; `release-2.17` = GH 1.8, `release-2.16` = GH 1.7, etc.) |
 
 The branch naming follows the ACM release numbering (`release-2.17` = ACM 2.17 = GH 1.8), not the upstream postgres_exporter version.
@@ -99,4 +100,4 @@ The branch naming follows the ACM release numbering (`release-2.17` = ACM 2.17 =
 
 ## Dependency Management
 
-The repo uses standard Go modules (`go.mod` / `go.sum`). Dependency updates are managed by **Mintmaker** (Konflux bot) which opens PRs against each active release branch. Mintmaker uses `fix(deps)` for security-relevant bumps and `chore(deps)` for routine updates. All Mintmaker PRs carry `do-not-merge/hold` and require human review before merge.
+The repo uses standard Go modules (`go.mod` / `go.sum`). Dependency updates for active Global Hub releases should target `main`, then advance to release branches through the fast-forward workflow. Mintmaker uses `fix(deps)` for security-relevant bumps and `chore(deps)` for routine updates. All Mintmaker PRs carry `do-not-merge/hold` and require human review before merge.
