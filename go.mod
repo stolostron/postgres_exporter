@@ -25,7 +25,7 @@ require (
 	github.com/go-logfmt/logfmt v0.6.1 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gopherjs/gopherjs v1.21.0 // indirect
-	github.com/jpillora/backoff v1.0.0 // indirect
+	github.com/jpillora/backoff v1.1.0 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
